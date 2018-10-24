@@ -13,10 +13,10 @@ public class ConexionSQL {
         StrictMode.setThreadPolicy(policy);
         Connection connection = null;
         String ConnectionURL = null;
-
         try {
             Class.forName("net.sourceforge.jtds.jdbc.Driver");
-            ConnectionURL = "jdbc:jtds:sqlserver://dbGeoShop.mssql.somee.com;port=1433;databaseName=dbGeoShop;user=acid0ikario_SQLLogin_1;password=hkfw6opi81";
+            //ConnectionURL = "jdbc:jtds:sqlserver://clinicacetu.database.windows.net;port=1433;databaseName=ClinicaCETU;user=elemus@clinicacetu;password=Clinicadb$";
+            ConnectionURL = "jdbc:jtds:sqlserver://dbGeoShop.mssql.somee.com;databaseName=dbGeoShop;user=acid0ikario_SQLLogin_1;password=hkfw6opi81";
             connection = DriverManager.getConnection(ConnectionURL);
         } catch (SQLException se) {
             Log.e("ERROR1", se.getMessage());
