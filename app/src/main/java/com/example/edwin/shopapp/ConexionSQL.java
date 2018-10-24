@@ -17,7 +17,6 @@ public class ConexionSQL {
         try {
             Class.forName("net.sourceforge.jtds.jdbc.Driver");
             ConnectionURL = "jdbc:jtds:sqlserver://dbGeoShop.mssql.somee.com;port=1433;databaseName=dbGeoShop;user=acid0ikario_SQLLogin_1;password=hkfw6opi81";
-            //String cn = "jdbc:jtds:sqlserver://tecniinox.database.windows.net;port=1433;databaseName=Nexus000;user=tecniinox@tecniinox;password=Nexus2016";
             connection = DriverManager.getConnection(ConnectionURL);
         } catch (SQLException se) {
             Log.e("ERROR1", se.getMessage());

@@ -75,49 +75,6 @@ public class Principal extends AppCompatActivity {
 
     }
 
-    OkHttpClient client = new OkHttpClient().newBuilder()
-            .connectTimeout(30, TimeUnit.SECONDS)
-            .writeTimeout(60, TimeUnit.SECONDS)
-            .readTimeout(60, TimeUnit.SECONDS)
-            .build();
-    public static final MediaType JSON
-            = MediaType.parse("application/json; charset=utf-8");
-
-    public boolean checkCredential(String mail, String pass){
-        boolean valido = false;
-        String url = "http://10.168.10.80/tablets/subirData.php?mail="+mail+"&pass="+pass;
-
-         okhttp3.Request request = new okhttp3.Request.Builder()
-                .url(url)
-                .get()
-                .build();
-        try {
-            client.newCall(request).enqueue(new Callback() {
-                @Override
-                public void onFailure(Call call, IOException e) {
-                    Log.i("**falla**",e.getMessage());
-
-                }
-                @Override
-                public void onResponse(Call call, okhttp3.Response response) throws IOException {
-                    if (response.isSuccessful()) {
-                        final String respuesta = response.body().string();
-                        Principal.this.runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                Log.i("***respuesta**",respuesta);
-
-                            }
-                        });
-                    }
-                }
-            });
-
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        return  valido;
-    }
 
 
 
