@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.edwin.shopapp.RegistroUsuarios">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="30dp"
+                android:text="Registro de Usuario"
+                android:textColor="@color/colorPrimary"
+                android:textSize="25dp" />
+
+            <EditText
+                android:id="@+id/txtNombre"
+                android:layout_width="300dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="40dp"
+                android:background="#11000000"
+                android:ems="10"
+                android:hint="Nombre"
+                android:drawableLeft="@drawable/ic_action_person"
+                />
+            <EditText
+                android:id="@+id/txtApellido"
+                android:layout_width="300dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="40dp"
+                android:background="#11000000"
+                android:ems="10"
+                android:hint="Apellido"
+                android:drawableLeft="@drawable/ic_action_person"
+                />
+
+            <EditText
+                android:id="@+id/txtTel"
+                android:layout_width="300dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="40dp"
+                android:background="#11000000"
+                android:ems="10"
+                android:inputType="number"
+                android:hint="Tel"
+                android:drawableLeft="@drawable/ic_action_telefono"
+                />
+            <EditText
+                android:id="@+id/txtDireccion"
+                android:layout_width="300dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="40dp"
+                android:background="#11000000"
+                android:ems="10"
+                android:hint="Direccion"
+                android:drawableLeft="@drawable/ic_action_direccion"
+                />
+
+            <EditText
+                android:id="@+id/txtCorreo"
+                android:layout_width="300dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="40dp"
+                android:background="#11000000"
+                android:drawableLeft="@drawable/ic_action_user2"
+                android:ems="10"
+                android:hint="Correo"
+                android:inputType="textWebEmailAddress" />
+            <EditText
+                android:id="@+id/txtPassword1"
+                android:layout_width="300dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="40dp"
+                android:background="#11000000"
+                android:ems="10"
+                android:hint="Password"
+                android:drawableLeft="@drawable/ic_action_pass2"
+                android:inputType="textPassword" />
+
+            <EditText
+                android:id="@+id/txtPassword2"
+                android:layout_width="300dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="40dp"
+                android:background="#11000000"
+                android:ems="10"
+                android:hint="Confirmar password"
+                android:drawableLeft="@drawable/ic_action_pass2"
+                android:inputType="textPassword" />
+
+            <Button
+                android:id="@+id/btnAceptar_nuevo_usuario"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:layout_gravity="center"
+                android:background="@color/colorPrimary"
+                android:text="Aceptar" />
+
+
+        </LinearLayout>
+    </ScrollView>
+
+
+</LinearLayout>

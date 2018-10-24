@@ -1,0 +1,51 @@
+<resources>
+    <string name="app_name">ShopApp</string>
+    <string name="title_activity_menus_tabs">MenusTabs</string>
+    <string name="tab_text_1">Productos</string>
+    <string name="tab_text_2">Carrito</string>
+    <string name="tab_text_3">Ubicación</string>
+    <string name="action_settings">Compras</string>
+    <string name="action_info_user">Datos Usuario</string>
+    <string name="action_salir">Salir</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string-array name="NomProducto">
+        <item>Tablet Samsung</item>
+        <item>Tablet Samsung</item>
+        <item>Tablet Samsung</item>
+        <item>Teléfono LG</item>
+        <item>Teléfono LG</item>
+        <item>Teléfono LG</item>
+    </string-array>
+    <string-array name="ModeloProducto">
+        <item>SM-T285 Plateado</item>
+        <item>SM-T561 </item>
+        <item>SM-T285 Negro</item>
+        <item>G6</item>
+        <item>G6</item>
+        <item>K4 Titan</item>
+    </string-array>
+    <string-array name="DescProducto">
+        <item>Tablet con memoria interna de 8GB, procesador Quad core de 1.3GHZ y sistema operativo Android 5.1.</item>
+        <item>Tablet con sistema operativo Android 4.4 Kit Kat, y pantallla de 9.6" y capacidad de almacenamiento de 8GB.</item>
+        <item>Tablet con memoria interna de 8GB, procesador Quad core de 1.3Ghz y sistema operativo Android 5.1.</item>
+        <item>Teléfono posee pantalla IPS Quad HD de 5.7", procesador Qualcomm Snapdragon 821, cuenta con reconocimiento de huella dactilar.</item>
+        <item>Teléfono posee pantalla IPS Quad HD de 5.7", procesador Qualcomm Snapdragon 821, cuenta con reconocimiento de huella dactilar.</item>
+        <item>Teléfono con procesador Quad Core 1.1Ghz MTK, posee pantalla de 5" FWGVA(854x480) 196ppi, elegante diseño delgado y ligero.</item>
+    </string-array>
+    <string-array name="PrecioProducto">
+        <item>$169.00</item>
+        <item>$259.00 </item>
+        <item>$169.00</item>
+        <item>$599.00</item>
+        <item>$599.00</item>
+        <item>$119.00</item>
+    </string-array>
+    <string-array name="Categorias_Productos">
+        <item>Celulares</item>
+        <item>Tablets</item>
+    </string-array>
+</resources>
