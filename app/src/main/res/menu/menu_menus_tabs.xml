@@ -20,4 +20,14 @@
         android:title="@string/action_salir"
         android:icon="@drawable/ic_action_salir"
         app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/cerrar_sesion"
+        android:orderInCategory="100"
+        android:title="Cerrar Sesión"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/configuracion"
+        android:orderInCategory="100"
+        android:title="Configuración"
+        app:showAsAction="never" />
 </menu>

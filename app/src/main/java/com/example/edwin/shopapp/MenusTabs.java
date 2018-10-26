@@ -1,6 +1,8 @@
 package com.example.edwin.shopapp;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -39,11 +41,13 @@ ListaComprasFragment.OnFragmentInteractionListener, UbicacionPedidoFragment.OnFr
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
+    private SharedPreferences prefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menus_tabs);
+        prefs = getSharedPreferences("Preferences", Context.MODE_PRIVATE);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -86,15 +90,16 @@ ListaComprasFragment.OnFragmentInteractionListener, UbicacionPedidoFragment.OnFr
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch (item.getItemId()) {
+            case R.id.cerrar_sesion:
+                removeSharedPreferences();
+                logOut();
+                return true;
+            case R.id.action_salir:
+                finish();
+            default:
+                return super.onOptionsItemSelected(item);
         }
-
-        if (id== R.id.action_salir ){
-         finish();
-        }
-        return true;
       //  return super.onOptionsItemSelected(item);
     }
 
@@ -167,6 +172,17 @@ ListaComprasFragment.OnFragmentInteractionListener, UbicacionPedidoFragment.OnFr
             // Show 3 total pages.
             return 3;
         }
+    }
+    private void removeSharedPreferences() {
+        prefs.edit().clear().apply();
+
+    }
+
+    //nos llevara a la pantalla del login
+    private void logOut() {
+        Intent i = new Intent(getApplicationContext(), Principal.class);
+        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(i);
     }
 
 

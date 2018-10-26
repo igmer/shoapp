@@ -141,6 +141,11 @@
                             android:textSize="18sp" />
                     </RelativeLayout>
                 </android.support.v7.widget.CardView>
+                <Switch
+                    android:id="@+id/swRemember"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="¿Recordar?"/>
 
             </LinearLayout>
         </LinearLayout>

@@ -2,16 +2,22 @@ package com.example.edwin.shopapp;
 
 import android.app.ListFragment;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.Toast;
+
+import java.util.ArrayList;
 
 
 /**
@@ -35,15 +41,13 @@ public class ProductosServiciosFragment extends Fragment {
     Button btnSalir, btnInfo;
     Spinner spnCategorias;
     ArrayAdapter adaptador_categoria;
-
     String [] nombre;
     String [] descripcion;
     String [] modelo;
     String [] precio;
-    String [] categorias;
-
+    ArrayList<String> categorias;
     ListViewAdapter adapter;
-    int[] imagen={R.drawable.uno, R.drawable.dos, R.drawable.tres, R.drawable.cuatro, R.drawable.cinco, R.drawable.seis};
+
     private OnFragmentInteractionListener mListener;
 
     public ProductosServiciosFragment() {
@@ -79,25 +83,41 @@ public class ProductosServiciosFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle state) {
         super.onActivityCreated(state);
+        Utilidades u = new Utilidades();
 
         nombre=getResources().getStringArray(R.array.NomProducto);
         modelo=getResources().getStringArray(R.array.ModeloProducto);
         descripcion=getResources().getStringArray(R.array.DescProducto);
         precio=getResources().getStringArray(R.array.PrecioProducto);
-        categorias =getResources().getStringArray(R.array.Categorias_Productos);
+        categorias = u.getListaProducto();
 
         spnCategorias =(Spinner) getActivity().findViewById(R.id.ListaCategoria);
 
-        final ListView lista = (ListView) getActivity().findViewById(R.id._Lista);
-        adapter = new ListViewAdapter(getActivity(), nombre, imagen,descripcion,modelo,precio);
+       ListView lista = (ListView) getActivity().findViewById(R.id._Lista);
+        adapter = new ListViewAdapter(getActivity(), categorias);
         adaptador_categoria = new ArrayAdapter(getActivity(),android.R.layout.simple_list_item_1,categorias);
-        spnCategorias.setAdapter(adaptador_categoria);
+        ArrayAdapter<String> adapterCategories = new ArrayAdapter<String>(getContext(),R.layout.support_simple_spinner_dropdown_item,categoriaProducto());
+        spnCategorias.setAdapter(adapterCategories);
         lista.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
 
-     /*   listView = (ListView)getView().findViewById(R.id.listview);
+        lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                String fila =categorias.get(position);
+                String[] parts = fila.split("!!");
+                String[] partsUrl = fila.split("-");
+                String codigo = parts[1]; //el codigo lo separamos por dos !!
+                String url = partsUrl[0];
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity().getApplicationContext(), android.R.layout.simple_expandable_list_item_1,elementos);
-        listView.setAdapter(adapter); */
+                Intent i = new Intent(getContext(),DetalleProductoActivity.class);
+                i.putExtra("codigo",codigo);
+                i.putExtra("url",url);
+                startActivity(i);
+
+            }
+        });
+
 
     }
 
@@ -127,6 +147,18 @@ public class ProductosServiciosFragment extends Fragment {
 
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(Uri uri);
+    }
+
+    public ArrayList<String> categoriaProducto(){
+        ArrayList<String> categories = new ArrayList<>();
+        categories.add("Todas");
+        categories.add("Tarjeta de Video");
+        categories.add("Cases");
+        categories.add("Discos Duros");
+        categories.add("Procesadores");
+        categories.add("Memorias RAM");
+        categories.add("Ventiladores");
+        return categories;
     }
 
 }

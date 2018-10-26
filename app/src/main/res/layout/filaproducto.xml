@@ -30,6 +30,7 @@
                     android:layout_marginRight="10dp"
                     android:layout_marginTop="15dp"
                     android:adjustViewBounds="false"
+                    android:focusable="false"
                     app:srcCompat="@drawable/uno" />
 
             </LinearLayout>
@@ -45,6 +46,7 @@
                     android:layout_height="wrap_content"
                     android:text="Nombre"
                     android:textSize="18sp"
+                    android:focusable="false"
                     android:textStyle="bold" />
 
                 <TextView
@@ -53,6 +55,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:text="TextView"
+                    android:focusable="false"
                     android:textColor="@color/colorPrimary"
                     android:textSize="14sp" />
 
@@ -61,6 +64,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Modelo"
+                    android:focusable="false"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
@@ -70,6 +74,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:text="TextView"
+                    android:focusable="false"
                     android:textColor="@color/colorPrimary"
                     android:textSize="14sp" />
 
@@ -79,6 +84,7 @@
                     android:layout_height="wrap_content"
                     android:text="Descripción"
                     android:textSize="18sp"
+                    android:focusable="false"
                     android:textStyle="bold" />
 
                 <TextView
@@ -86,6 +92,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="TextView"
+                    android:focusable="false"
                     android:textSize="14sp" />
 
                 <TextView
@@ -94,20 +101,23 @@
                     android:layout_height="wrap_content"
                     android:text="Precio"
                     android:textSize="18sp"
+                    android:focusable="false"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tvPrecio"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:focusable="false"
                     android:text="TextView" />
 
                 <Button
                     android:id="@+id/btnAgregarCarrito"
                     android:layout_width="150sp"
                     android:layout_height="wrap_content"
+                    android:focusable="false"
                     android:background="?android:attr/textColorLinkInverse"
-                    android:text="+ Agregar al Carrito"
+                    android:text="+ Ver Detalle"
                     android:textAllCaps="false"
                     android:textStyle="bold" />
             </LinearLayout>

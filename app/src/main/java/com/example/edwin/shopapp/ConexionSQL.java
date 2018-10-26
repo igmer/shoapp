@@ -12,6 +12,7 @@ public class ConexionSQL {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
         Connection connection = null;
+        String adresseip = "dbGeoShop.mssql.somee.com";
         String ConnectionURL = null;
         try {
             Class.forName("net.sourceforge.jtds.jdbc.Driver");
@@ -19,6 +20,7 @@ public class ConexionSQL {
             ConnectionURL = "jdbc:jtds:sqlserver://dbGeoShop.mssql.somee.com;databaseName=dbGeoShop;user=acid0ikario_SQLLogin_1;password=hkfw6opi81";
             connection = DriverManager.getConnection(ConnectionURL);
         } catch (SQLException se) {
+            se.printStackTrace();
             Log.e("ERROR1", se.getMessage());
         } catch (ClassNotFoundException e) {
             Log.e("ERROR2", e.getMessage());

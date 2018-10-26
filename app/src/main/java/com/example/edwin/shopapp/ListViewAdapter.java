@@ -12,30 +12,26 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
+
 public class ListViewAdapter extends BaseAdapter {
     // Declare Variables
     Context context;
 
-    String[] nombre;
-    String[] descripcion;
-    String[] modelo;
-    String[] precio;
-    int[] imagenes;
+    ArrayList<String> lista;
 
     LayoutInflater inflater;
 
-    public ListViewAdapter(Context context, String[] nombre_, int[] imagenes_,  String[] descripcion_, String[] modelo_, String[] precio_) {
+    public ListViewAdapter(Context context,ArrayList<String> lista) {
         this.context = context;
-        this.nombre = nombre_;
-        this.descripcion = descripcion_;
-        this.modelo=modelo_;
-        this.precio =precio_;
-        this.imagenes = imagenes_;
+      this.lista = lista;
     }
 
     @Override
     public int getCount() {
-        return nombre.length;
+        return lista.size();
     }
 
     @Override
@@ -69,12 +65,14 @@ public class ListViewAdapter extends BaseAdapter {
         tvPrecio = (TextView) itemView.findViewById(R.id.tvPrecio);
         img = (ImageView) itemView.findViewById(R.id.imgcarta);
 
-        // Capture position and set to the TextViews
-        tvNombre.setText(nombre[position]);
-        tvDescripcion.setText(descripcion[position]);
-        tvModelo.setText(modelo[position]);
-        tvPrecio.setText(precio[position]);
-        img.setImageResource(imagenes[position]);
+        String fila = lista.get(position); // aqui tengo cada fila del arrayList
+        String[] parts = fila.split("-"); //partimos la cadena por el - con el que concatemanos al crear el arrayList
+
+        tvNombre.setText(parts[1]);
+        tvDescripcion.setText(parts[3]);
+        tvModelo.setText(parts[0]); // esta es la Url pero la usaremos luego para cargar la imagen
+        tvPrecio.setText(parts[2]);
+        Picasso.get().load(parts[0]).into(img);
 
         return itemView;
     }
