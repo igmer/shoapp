@@ -42,8 +42,8 @@ public class Utilidades {
             ResultSetMetaData rsmd = rs.getMetaData();
             int columnsNumber = rsmd.getColumnCount();
             while (rs.next()) { // el pimer elemento que ira el la lista sera la Url de la imagen
-                    productos.add(rs.getString(4)+"-"+rs.getString(1)+"-"+rs.getString(2)
-                                    +"-"+rs.getString(3)+"!!"+rs.getString(5));
+                    productos.add(rs.getString(4)+"!-"+rs.getString(1)+"!-"+rs.getString(2)
+                                    +"!-"+rs.getString(3)+"!!"+rs.getString(5));
 
 
             }
