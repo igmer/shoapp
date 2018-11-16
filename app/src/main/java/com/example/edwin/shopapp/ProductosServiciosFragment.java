@@ -85,19 +85,21 @@ public class ProductosServiciosFragment extends Fragment {
         super.onActivityCreated(state);
         Utilidades u = new Utilidades();
 
-        nombre=getResources().getStringArray(R.array.NomProducto);
-        modelo=getResources().getStringArray(R.array.ModeloProducto);
-        descripcion=getResources().getStringArray(R.array.DescProducto);
-        precio=getResources().getStringArray(R.array.PrecioProducto);
+        //nombre=getResources().getStringArray(R.array.NomProducto);
+       // modelo=getResources().getStringArray(R.array.ModeloProducto);
+      //  descripcion=getResources().getStringArray(R.array.DescProducto);
+      //  precio=getResources().getStringArray(R.array.PrecioProducto);
         categorias = u.getListaProducto();
 
         spnCategorias =(Spinner) getActivity().findViewById(R.id.ListaCategoria);
-
-       ListView lista = (ListView) getActivity().findViewById(R.id._Lista);
-        adapter = new ListViewAdapter(getActivity(), categorias);
-        adaptador_categoria = new ArrayAdapter(getActivity(),android.R.layout.simple_list_item_1,categorias);
         ArrayAdapter<String> adapterCategories = new ArrayAdapter<String>(getContext(),R.layout.support_simple_spinner_dropdown_item,categoriaProducto());
         spnCategorias.setAdapter(adapterCategories);
+
+         ListView lista = (ListView) getActivity().findViewById(R.id._Lista);
+         adapter = new ListViewAdapter(getActivity(), categorias);
+       // adaptador_categoria = new ArrayAdapter(getActivity(),android.R.layout.simple_list_item_1,categorias);
+
+
         lista.setAdapter(adapter);
         adapter.notifyDataSetChanged();
 
@@ -106,7 +108,7 @@ public class ProductosServiciosFragment extends Fragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 String fila =categorias.get(position);
                 String[] parts = fila.split("!!");
-                String[] partsUrl = fila.split("-");
+                String[] partsUrl = fila.split("!-");
                 String codigo = parts[1]; //el codigo lo separamos por dos !!
                 String url = partsUrl[0];
 

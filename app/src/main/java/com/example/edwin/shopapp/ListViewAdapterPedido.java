@@ -16,7 +16,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-public class ListViewAdapter extends BaseAdapter {
+public class ListViewAdapterPedido extends BaseAdapter {
     // Declare Variables
     Context context;
 
@@ -24,7 +24,7 @@ public class ListViewAdapter extends BaseAdapter {
 
     LayoutInflater inflater;
 
-    public ListViewAdapter(Context context,ArrayList<String> lista) {
+    public ListViewAdapterPedido(Context context, ArrayList<String> lista) {
         this.context = context;
       this.lista = lista;
     }
@@ -56,21 +56,21 @@ public class ListViewAdapter extends BaseAdapter {
         //http://developer.android.com/intl/es/reference/android/view/LayoutInflater.html
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        View itemView = inflater.inflate(R.layout.filaproducto, parent, false);
+        View itemView = inflater.inflate(R.layout.filapedido, parent, false);
 
         // Locate the TextViews in listview_item.xml
-        tvNombre = (TextView) itemView.findViewById(R.id.tvNombre);
-        tvDescripcion = (TextView) itemView.findViewById(R.id.tvDescripcion);
-       // tvModelo = (TextView) itemView.findViewById(R.id.tvModelo);
-        tvPrecio = (TextView) itemView.findViewById(R.id.tvPrecio);
-        img = (ImageView) itemView.findViewById(R.id.imgcarta);
+        tvNombre = (TextView) itemView.findViewById(R.id.tvNombrePed);
+        tvDescripcion = (TextView) itemView.findViewById(R.id.tvDescripcionPed);
+       // tvModelo = (TextView) itemView.findViewById(R.id.tvModeloPed);
+        tvPrecio = (TextView) itemView.findViewById(R.id.tvPrecioPed);
+        img = (ImageView) itemView.findViewById(R.id.imgcartaPed);
 
         String fila = lista.get(position); // aqui tengo cada fila del arrayList
         String[] parts = fila.split("!-"); //partimos la cadena por el - con el que concatemanos al crear el arrayList
 
         tvNombre.setText(parts[1]);
         tvDescripcion.setText(parts[3]);
-        //tvModelo.setText(parts[0]); // esta es la Url pero la usaremos luego para cargar la imagen
+        //tvModelo.setText("");
         tvPrecio.setText(parts[2]);
         Picasso.get().load("http://www.geoshop.somee.com/UpImg/"+parts[0]).into(img);
 

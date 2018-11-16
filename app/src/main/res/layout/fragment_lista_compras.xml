@@ -4,10 +4,25 @@
     android:layout_height="match_parent"
     tools:context="com.example.edwin.shopapp.ListaComprasFragment">
 
-    <!-- TODO: Update blank fragment layout -->
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
     <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Productos agregados en el carrito:"
+        android:layout_gravity="center"/>
+
+    <ListView
+        android:id="@+id/lvCarritoCompras"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_weight="1">
+
+    </ListView>
+
+</LinearLayout>
+
 
 </FrameLayout>

@@ -163,7 +163,7 @@ public class Principal extends AppCompatActivity {
             SharedPreferences.Editor editor = prefs.edit();
             editor.putString("user", user);
             editor.putString("pass", pass);
-            editor.putString("usuarioBD", pass);
+            editor.putString("usuarioBD", user);
             editor.apply();
         }else{
             SharedPreferences.Editor editor = prefs.edit();
