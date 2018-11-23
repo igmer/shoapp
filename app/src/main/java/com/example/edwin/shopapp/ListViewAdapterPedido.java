@@ -66,13 +66,13 @@ public class ListViewAdapterPedido extends BaseAdapter {
         img = (ImageView) itemView.findViewById(R.id.imgcartaPed);
 
         String fila = lista.get(position); // aqui tengo cada fila del arrayList
-        String[] parts = fila.split("!-"); //partimos la cadena por el - con el que concatemanos al crear el arrayList
+        String[] parts = fila.split("!/"); //partimos la cadena por el - con el que concatemanos al crear el arrayList
 
-        tvNombre.setText(parts[1]);
-        tvDescripcion.setText(parts[3]);
+        tvNombre.setText(parts[2]);
+        tvDescripcion.setText(parts[4]);
         //tvModelo.setText("");
-        tvPrecio.setText(parts[2]);
-        Picasso.get().load("http://www.geoshop.somee.com/UpImg/"+parts[0]).into(img);
+        tvPrecio.setText(parts[3]);
+        Picasso.get().load("http://www.geoshop.somee.com/UpImg/"+parts[1]).into(img);
 
         return itemView;
     }

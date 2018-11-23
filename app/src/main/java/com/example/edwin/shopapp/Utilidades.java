@@ -1,7 +1,12 @@
 package com.example.edwin.shopapp;
 
+import android.content.Context;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
+
+import com.example.edwin.shopapp.SQLite.SQLiteLocal;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -51,6 +56,25 @@ public class Utilidades {
         } catch (Exception e) {
             Log.i("Error**",e.getMessage());
 
+        }
+        return productos;
+    }
+    public ArrayList<String> getListaPedido(Context context){
+        Connection connect; connect = ConexionSQL.ConnectionHelper();
+        ArrayList<String> productos = new ArrayList<>();
+        try {
+            SQLiteLocal helper = new SQLiteLocal(context);
+            SQLiteDatabase db = helper.getReadableDatabase();
+            String comando="SELECT codigo,url,nombre,precio,descripcion FROM DetallePedido WHERE estado = 'ADD'";
+            Cursor rs = db.rawQuery(comando, null);
+            if (rs.moveToFirst()) {
+                do {// el pimer elemento que ira el la lista sera la Url de la imagen
+                    productos.add(rs.getString(0) + "!/" + rs.getString(1)+"!/"+rs.getString(2)+"!/"+rs.getString(3)+"!/"+rs.getString(4));
+                } while (rs.moveToNext());
+                db.close();
+            }
+        } catch (Exception e) {
+            Log.i("Error**",e.getMessage());
         }
         return productos;
     }

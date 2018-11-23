@@ -111,10 +111,16 @@ public class ProductosServiciosFragment extends Fragment {
                 String[] partsUrl = fila.split("!-");
                 String codigo = parts[1]; //el codigo lo separamos por dos !!
                 String url = partsUrl[0];
-
+                String nombre = partsUrl[1];
+                String precio = partsUrl[2];
+                String descripcion = partsUrl[3];
                 Intent i = new Intent(getContext(),DetalleProductoActivity.class);
                 i.putExtra("codigo",codigo);
                 i.putExtra("url",url);
+                i.putExtra("nombre",nombre);
+                i.putExtra("precio",precio);
+                i.putExtra("descripcion",descripcion);
+              //  i.
                 startActivity(i);
 
             }

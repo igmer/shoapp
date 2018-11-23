@@ -1,16 +1,37 @@
 package com.example.edwin.shopapp;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
+import com.example.edwin.shopapp.SQLite.SQLiteLocal;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 
 public class ListaComprasFragment extends Fragment {
@@ -20,6 +41,7 @@ public class ListaComprasFragment extends Fragment {
     ArrayList<String> categorias;
     ListViewAdapterPedido adapter;
     ArrayAdapter adaptador_categoria;
+    private SharedPreferences pref;
 
 
 
@@ -53,11 +75,22 @@ public class ListaComprasFragment extends Fragment {
 
         View v = inflater.inflate(R.layout.fragment_lista_compras, container, false);
         Utilidades u = new Utilidades();
-        categorias = u.getListaProducto();
+        pref = this.getActivity().getSharedPreferences("Preferences", Context.MODE_PRIVATE);
+        categorias = u.getListaPedido(getContext());
         ListView lista = v.findViewById(R.id.lvCarritoCompras);
-        adapter = new ListViewAdapterPedido(getActivity(), categorias);
-        lista.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
+        FloatingActionButton fab = v.findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+              confirm();
+            }
+        });
+        if (categorias.size()>0){
+            adapter = new ListViewAdapterPedido(getActivity(), categorias);
+            lista.setAdapter(adapter);
+            adapter.notifyDataSetChanged();
+        }
+
         return v;
     }
 
@@ -88,5 +121,117 @@ public class ListaComprasFragment extends Fragment {
     public interface OnFragmentInteractionListener {
 
         void onFragmentInteraction(Uri uri);
+    }
+    public void confirm() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setMessage(Html.fromHtml("<font color='#FF0000'><b>Confirma la compra?</b></font>"))
+                .setNegativeButton(Html.fromHtml("Cancelar"), null)
+                .setPositiveButton(Html.fromHtml("Sí, Comprar"), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        agregarProducto addProd = new agregarProducto();
+                        addProd.execute("");
+
+
+                    }
+                })
+                .setCancelable(false);
+        //.create().show();
+        AlertDialog a = builder.create();
+        a.show();
+        Button btnPositivo = a.getButton(DialogInterface.BUTTON_POSITIVE);
+        btnPositivo.setTextColor(Color.RED);
+        Button btnNegativo = a.getButton(DialogInterface.BUTTON_NEGATIVE);
+        btnNegativo.setTextColor(Color.GREEN);
+    }
+    public ArrayList<String> deletePedidoLocal(){
+        ArrayList<String> pedido  = new ArrayList<>();
+        try {
+            SQLiteLocal helper = new SQLiteLocal(getActivity());
+            SQLiteDatabase db = helper.getWritableDatabase();
+
+            String getPedido="SELECT idProducto,precio FROM DetallePedido WHERE estado = 'ADD'";
+            db.rawQuery(getPedido,null);
+            Cursor rs = db.rawQuery(getPedido, null);
+            if (rs.moveToFirst()) {
+                do {// el pimer elemento que ira el la lista sera la Url de la imagen
+                    pedido.add(rs.getString(0) + "!/" + rs.getString(1));
+                } while (rs.moveToNext());
+                db.close();
+            }
+
+          //  String borrarpedido="UPDATE DetallePedido SET estado = 'CONFIRMADO' WHERE estado = 'ADD'";
+          //  db.execSQL(borrarpedido);
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return pedido;
+
+    }
+    class agregarProducto extends AsyncTask<String,String,Integer> {
+
+        @Override
+        protected Integer doInBackground(String... strings) {
+            Connection connect; connect = ConexionSQL.ConnectionHelper();
+            String mensaje_error="";
+            String usuario  = pref.getString("usuarioBD","");//obtnemos el usuario
+            Date currentTime = Calendar.getInstance().getTime();
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String fecha = dateFormat.format(currentTime);
+            Integer ingresado=0;
+            try {
+                Statement st = connect.createStatement();
+                int maxCodido= 0;
+                String comando="SELECT max(codigo) FROM Pedidos";
+                ResultSet rs = st.executeQuery(comando);
+                while (rs.next()) {
+                   maxCodido = rs.getInt(1);
+                }
+                int maxCodigoFinal = maxCodido +1;
+                String pedidoInsert="INSERT INTO pedidos(idEstado,fechaIngreso,idCliente,latitud,longitud)values('SOL','"+fecha+"','"+usuario+"','13.700059'," +
+                        "'-89.200195')";
+                st.execute(pedidoInsert);
+
+                for (int i = 0; i <deletePedidoLocal().size() ; i++) {
+                    ArrayList<String> lista = deletePedidoLocal();
+                    String fila =lista.get(i);
+                    String[] part = fila.split("!/");
+                    int idProducto = Integer.parseInt(part[0]);
+                    Double precio = Double.parseDouble(part[1]);
+                    String pedidoDetalle="INSERT INTO DetallePedido" +
+                            "(idPedido, idProducto, precio)" +
+                            "VALUES("+maxCodigoFinal+", "+idProducto+", "+precio+");";
+                    st.execute(pedidoDetalle);
+
+                }
+
+                connect.close();
+                ingresado = 1;
+            } catch (Exception e) {
+                e.printStackTrace();
+               // Toast.makeText(getActivity(),"Error: "+e.getMessage(),Toast.LENGTH_LONG).show();
+                ingresado=0;
+            }
+            return ingresado;
+
+        }
+
+        @Override
+        protected void onPostExecute(Integer respuesta) {
+            //super.onPostExecute(integer);
+            if (respuesta==1){
+                SQLiteLocal helper = new SQLiteLocal(getActivity());
+                SQLiteDatabase db = helper.getWritableDatabase();
+                String borrarpedido="UPDATE DetallePedido SET estado = 'CONFIRMADO' WHERE estado = 'ADD'";
+                  db.execSQL(borrarpedido);
+                Toast.makeText(getActivity(),"Su compra de ha reaizado con exito",Toast.LENGTH_LONG).show();
+                Intent i = new Intent(getActivity(),MenusTabs.class);
+                startActivity(i);
+
+            }else{
+                Toast.makeText(getActivity(),"Hubo un error al agregar el producto",Toast.LENGTH_LONG).show();
+            }
+        }
     }
 }
