@@ -18,6 +18,7 @@ import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -42,6 +43,8 @@ public class ListaComprasFragment extends Fragment {
     ListViewAdapterPedido adapter;
     ArrayAdapter adaptador_categoria;
     private SharedPreferences pref;
+    Utilidades u;
+    ListView lista;
 
 
 
@@ -74,15 +77,21 @@ public class ListaComprasFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.fragment_lista_compras, container, false);
-        Utilidades u = new Utilidades();
+        u = new Utilidades();
         pref = this.getActivity().getSharedPreferences("Preferences", Context.MODE_PRIVATE);
         categorias = u.getListaPedido(getContext());
-        ListView lista = v.findViewById(R.id.lvCarritoCompras);
+        lista = v.findViewById(R.id.lvCarritoCompras);
         FloatingActionButton fab = v.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-              confirm();
+                if (categorias.size()>0){
+                    Intent intent = new Intent(getActivity(),ConfrimarEntregaActivity.class);
+                    startActivity(intent);
+                    //confirm();
+                }else {
+                    Toast.makeText(getContext(),"No tiene productos agregados a su carrito",Toast.LENGTH_LONG).show();
+                }
             }
         });
         if (categorias.size()>0){
@@ -90,6 +99,27 @@ public class ListaComprasFragment extends Fragment {
             lista.setAdapter(adapter);
             adapter.notifyDataSetChanged();
         }
+        lista.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+               // Toast.makeText(getActivity(),String.valueOf(categorias.get(i)),Toast.LENGTH_LONG).show();
+                try {
+                    String[] fila = categorias.get(i).split("!/");
+                    String codigoPedido = fila[0];
+                    int exito=deleteLocalProducto(Integer.parseInt(codigoPedido));
+                    adapter.notifyDataSetChanged();
+                    categorias = u.getListaPedido(getContext());
+                    adapter = new ListViewAdapterPedido(getActivity(), categorias);
+                    lista.setAdapter(adapter);
+
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+
+
+                return true;
+            }
+        });
 
         return v;
     }
@@ -233,5 +263,21 @@ public class ListaComprasFragment extends Fragment {
                 Toast.makeText(getActivity(),"Hubo un error al agregar el producto",Toast.LENGTH_LONG).show();
             }
         }
+    }
+    public int deleteLocalProducto(int codigoPedido){
+        int exito;
+        try {
+            SQLiteLocal helper = new SQLiteLocal(getActivity().getApplicationContext());
+            SQLiteDatabase db = helper.getWritableDatabase();
+            String deletepedido="DELETE FROM DetallePedido WHERE codigo ="+codigoPedido;
+            db.execSQL(deletepedido);
+            exito = 1;
+            db.close();
+        }catch (Exception e){
+            e.printStackTrace();
+            exito =0;
+        }
+
+        return exito;
     }
 }

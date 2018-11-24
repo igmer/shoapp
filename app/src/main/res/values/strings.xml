@@ -48,4 +48,5 @@
         <item>Celulares</item>
         <item>Tablets</item>
     </string-array>
+    <string name="title_activity_confrimar_entrega">Map</string>
 </resources>

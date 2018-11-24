@@ -44,6 +44,7 @@ public class Principal extends AppCompatActivity {
     static Switch swRemember;
     ProgressBar pbLogin;
     static SharedPreferences prefs;
+    String rol = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,12 +104,14 @@ public class Principal extends AppCompatActivity {
             Connection connect; connect = ConexionSQL.ConnectionHelper();
             String mensaje_error="";
             Integer existe=0;
+
             try {
                 Statement st = connect.createStatement();
-                String comando="SELECT usuario, password FROM usuarios where usuario='" +  elUsuario + "'";
+                String comando="SELECT usuario, password,idRol FROM usuarios where usuario='" +  elUsuario + "'";
                 comando+=" and password='" + laClave+"'";
                 ResultSet rs = st.executeQuery(comando);
                 while (rs.next()) {
+                   rol= rs.getString(3);
                     existe++;
                 }
                 connect.close();
@@ -135,9 +138,19 @@ public class Principal extends AppCompatActivity {
             //super.onPostExecute(existe);
             if (existe>0){
                 saveOnPreferences(edtEmail.getText().toString().trim(),edtClave.getText().toString().trim());
-                Intent i = new Intent(getApplicationContext(),MenusTabs.class);
-                startActivity(i);
-                finish();
+                if (rol.equals("REP")){
+                    Intent i = new Intent(getApplicationContext(),RepartidorActivity.class);
+                    startActivity(i);
+                    finish();
+
+                }else{
+                    Intent i = new Intent(getApplicationContext(),MenusTabs.class);
+                    startActivity(i);
+                    finish();
+
+                }
+
+
             }else{
                 edtClave.setError("Credenciales no validas");
                 edtEmail.setError("Credenciales no validas");

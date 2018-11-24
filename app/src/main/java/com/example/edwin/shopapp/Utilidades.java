@@ -59,6 +59,32 @@ public class Utilidades {
         }
         return productos;
     }
+    public ArrayList<String> getListaRepartidor( ){
+        Connection connect; connect = ConexionSQL.ConnectionHelper();
+        ArrayList<String> productos = new ArrayList<>();
+
+        try {
+            Statement st = connect.createStatement();
+            String comando="SELECT u.nombre, pe.idrepartidor,pe.destino,dp.idProducto " +
+                    "FROM pedidos pe " +
+                    "INNER JOIN DetallePedido dp on pe.codigo = dp.idPedido " +
+                    "INNER JOIN usuarios u on u.usuario = pe.idCliente " +
+                    "WHERE pe.idRepartidor = 'repartidor1' AND pe.idestado = 'NVO' ";
+            ResultSet rs = st.executeQuery(comando);
+            ResultSetMetaData rsmd = rs.getMetaData();
+            int columnsNumber = rsmd.getColumnCount();
+            while (rs.next()) { // el pimer elemento que ira el la lista sera la Url de la imagen
+                productos.add(rs.getString(1)+"!/"+rs.getString(2)+"!/"+rs.getString(3)+"!/"+rs.getString(4));
+
+
+            }
+            connect.close();
+        } catch (Exception e) {
+            Log.i("Error**",e.getMessage());
+
+        }
+        return productos;
+    }
     public ArrayList<String> getListaPedido(Context context){
         Connection connect; connect = ConexionSQL.ConnectionHelper();
         ArrayList<String> productos = new ArrayList<>();
