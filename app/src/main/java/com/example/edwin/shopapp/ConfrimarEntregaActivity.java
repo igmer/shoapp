@@ -79,8 +79,8 @@ public class ConfrimarEntregaActivity extends FragmentActivity implements OnMapR
         }
         locationManager = (LocationManager) ConfrimarEntregaActivity.this.getSystemService(Context.LOCATION_SERVICE);
         mMap.setMyLocationEnabled(true);
-        locationManager.reques
-        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 0,  this);
+       // locationManager.reques
+       // locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 0,  this);
     }
 
     public void habilitarPosicionInicial() {
