@@ -59,17 +59,16 @@ public class Utilidades {
         }
         return productos;
     }
-    public ArrayList<String> getListaRepartidor( ){
+    public ArrayList<String> getListaRepartidor( String idRepartidor){
         Connection connect; connect = ConexionSQL.ConnectionHelper();
         ArrayList<String> productos = new ArrayList<>();
 
         try {
             Statement st = connect.createStatement();
-            String comando="SELECT u.nombre, pe.idrepartidor,pe.destino,dp.idProducto " +
-                    "FROM pedidos pe " +
-                    "INNER JOIN DetallePedido dp on pe.codigo = dp.idPedido " +
-                    "INNER JOIN usuarios u on u.usuario = pe.idCliente " +
-                    "WHERE pe.idRepartidor = 'repartidor1' AND pe.idestado = 'NVO' ";
+            String comando="SELECT p.codigo, p.fechaIngreso,u.nombre,u.apellido " +
+                    "FROM pedidos p "+
+                    "INNER JOIN usuarios u on p.idCliente= u.usuario"+
+                    " WHERE p.idRepartidor = '"+idRepartidor+"' AND p.idestado = 'NVO' ";
             ResultSet rs = st.executeQuery(comando);
             ResultSetMetaData rsmd = rs.getMetaData();
             int columnsNumber = rsmd.getColumnCount();

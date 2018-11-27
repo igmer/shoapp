@@ -152,7 +152,7 @@ public class ListaComprasFragment extends Fragment {
 
         void onFragmentInteraction(Uri uri);
     }
-    public void confirm() {
+    /*public void confirm() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setMessage(Html.fromHtml("<font color='#FF0000'><b>Confirma la compra?</b></font>"))
                 .setNegativeButton(Html.fromHtml("Cancelar"), null)
@@ -173,97 +173,9 @@ public class ListaComprasFragment extends Fragment {
         btnPositivo.setTextColor(Color.RED);
         Button btnNegativo = a.getButton(DialogInterface.BUTTON_NEGATIVE);
         btnNegativo.setTextColor(Color.GREEN);
-    }
-    public ArrayList<String> deletePedidoLocal(){
-        ArrayList<String> pedido  = new ArrayList<>();
-        try {
-            SQLiteLocal helper = new SQLiteLocal(getActivity());
-            SQLiteDatabase db = helper.getWritableDatabase();
+    }*/
 
-            String getPedido="SELECT idProducto,precio FROM DetallePedido WHERE estado = 'ADD'";
-            db.rawQuery(getPedido,null);
-            Cursor rs = db.rawQuery(getPedido, null);
-            if (rs.moveToFirst()) {
-                do {// el pimer elemento que ira el la lista sera la Url de la imagen
-                    pedido.add(rs.getString(0) + "!/" + rs.getString(1));
-                } while (rs.moveToNext());
-                db.close();
-            }
 
-          //  String borrarpedido="UPDATE DetallePedido SET estado = 'CONFIRMADO' WHERE estado = 'ADD'";
-          //  db.execSQL(borrarpedido);
-
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        return pedido;
-
-    }
-    class agregarProducto extends AsyncTask<String,String,Integer> {
-
-        @Override
-        protected Integer doInBackground(String... strings) {
-            Connection connect; connect = ConexionSQL.ConnectionHelper();
-            String mensaje_error="";
-            String usuario  = pref.getString("usuarioBD","");//obtnemos el usuario
-            Date currentTime = Calendar.getInstance().getTime();
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            String fecha = dateFormat.format(currentTime);
-            Integer ingresado=0;
-            try {
-                Statement st = connect.createStatement();
-                int maxCodido= 0;
-                String comando="SELECT max(codigo) FROM Pedidos";
-                ResultSet rs = st.executeQuery(comando);
-                while (rs.next()) {
-                   maxCodido = rs.getInt(1);
-                }
-                int maxCodigoFinal = maxCodido +1;
-                String pedidoInsert="INSERT INTO pedidos(idEstado,fechaIngreso,idCliente,latitud,longitud)values('SOL','"+fecha+"','"+usuario+"','13.700059'," +
-                        "'-89.200195')";
-                st.execute(pedidoInsert);
-
-                for (int i = 0; i <deletePedidoLocal().size() ; i++) {
-                    ArrayList<String> lista = deletePedidoLocal();
-                    String fila =lista.get(i);
-                    String[] part = fila.split("!/");
-                    int idProducto = Integer.parseInt(part[0]);
-                    Double precio = Double.parseDouble(part[1]);
-                    String pedidoDetalle="INSERT INTO DetallePedido" +
-                            "(idPedido, idProducto, precio)" +
-                            "VALUES("+maxCodigoFinal+", "+idProducto+", "+precio+");";
-                    st.execute(pedidoDetalle);
-
-                }
-
-                connect.close();
-                ingresado = 1;
-            } catch (Exception e) {
-                e.printStackTrace();
-               // Toast.makeText(getActivity(),"Error: "+e.getMessage(),Toast.LENGTH_LONG).show();
-                ingresado=0;
-            }
-            return ingresado;
-
-        }
-
-        @Override
-        protected void onPostExecute(Integer respuesta) {
-            //super.onPostExecute(integer);
-            if (respuesta==1){
-                SQLiteLocal helper = new SQLiteLocal(getActivity());
-                SQLiteDatabase db = helper.getWritableDatabase();
-                String borrarpedido="UPDATE DetallePedido SET estado = 'CONFIRMADO' WHERE estado = 'ADD'";
-                  db.execSQL(borrarpedido);
-                Toast.makeText(getActivity(),"Su compra de ha reaizado con exito",Toast.LENGTH_LONG).show();
-                Intent i = new Intent(getActivity(),MenusTabs.class);
-                startActivity(i);
-
-            }else{
-                Toast.makeText(getActivity(),"Hubo un error al agregar el producto",Toast.LENGTH_LONG).show();
-            }
-        }
-    }
     public int deleteLocalProducto(int codigoPedido){
         int exito;
         try {

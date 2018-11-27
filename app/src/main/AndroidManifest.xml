@@ -46,7 +46,10 @@
         <activity android:name=".RepartidorActivity" />
         <activity
             android:name=".ConfrimarEntregaActivity"
-            android:label="@string/title_activity_confrimar_entrega"></activity>
+            android:label="@string/title_activity_confrimar_entrega" />
+        <activity
+            android:name=".RepartidorMaps"
+            android:label="@string/title_activity_repartidor_maps"></activity>
     </application>
 
 </manifest>

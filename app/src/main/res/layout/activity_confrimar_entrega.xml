@@ -8,15 +8,16 @@
     android:orientation="vertical"
     tools:context=".ConfrimarEntregaActivity"
    >
-    <TextView
-        android:layout_width="wrap_content"
+    <fragment
+        android:id="@+id/place_autocomplete_fragment"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="30sp"
-        android:text="Confirmar punto de entrega"/>
+        android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
+        />
     <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_weight="4"
+        android:layout_weight="6"
         android:layout_height="0dp"
         xmlns:app="http://schemas.android.com/apk/res-auto">
 
@@ -40,18 +41,17 @@
             app:borderWidth="0dp"
             />
     </FrameLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:gravity="center">
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fabConfirmar"
-            android:layout_width="120dp"
-            app:backgroundTint="@color/coloWhite"
-            android:layout_height="90dp"
-            android:layout_gravity="end"
-            android:src="@drawable/icono_comprar"/>
+        android:layout_height="50dp"
+        android:gravity="bottom">
+       <Button
+           android:id="@+id/btnConfirmarEntrega"
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"
+           android:background="@color/colorPrimary"
+           android:text="Confirmar Copra"/>
 
     </LinearLayout>
 

@@ -43,25 +43,31 @@ public class ListViewAdapterRepartidor extends BaseAdapter{
         TextView tvProducto;
         TextView tvCliente;
         TextView tvDireccion;
-
-
-        //http://developer.android.com/intl/es/reference/android/view/LayoutInflater.html
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         View itemView = inflater.inflate(R.layout.fial_repartidor, viewGroup, false);
 
-        // Locate the TextViews in listview_item.xml
-        tvProducto = (TextView) itemView.findViewById(R.id.repProducto);
-        tvCliente = (TextView) itemView.findViewById(R.id.repCliente);
-        tvDireccion = (TextView) itemView.findViewById(R.id.repDireccion);
+
+        try {
+
+            // Locate the TextViews in listview_item.xml
+            tvProducto = (TextView) itemView.findViewById(R.id.repProducto);
+            tvCliente = (TextView) itemView.findViewById(R.id.repCliente);
+            tvDireccion = (TextView) itemView.findViewById(R.id.repDireccion);
 
 
-        String fila = lista.get(position); // aqui tengo cada fila del arrayList
-        String[] parts = fila.split("!/"); //partimos la cadena por el - con el que concatemanos al crear el arrayList
+            String fila = lista.get(position); // aqui tengo cada fila del arrayList
+            String[] parts = fila.split("!/"); //partimos la cadena por el - con el que concatemanos al crear el arrayList
 
-        tvCliente.setText(parts[0]);
-        tvProducto.setText(parts[1]);
-        tvDireccion.setText(parts[2]);
+            tvCliente.setText(parts[0]);
+            tvProducto.setText(parts[1]);
+            tvDireccion.setText(parts[2]+" "+parts[3]);
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        //http://developer.android.com/intl/es/reference/android/view/LayoutInflater.html
+
 
         return itemView;
     }

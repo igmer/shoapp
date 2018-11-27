@@ -49,4 +49,5 @@
         <item>Tablets</item>
     </string-array>
     <string name="title_activity_confrimar_entrega">Map</string>
+    <string name="title_activity_repartidor_maps">Map</string>
 </resources>
