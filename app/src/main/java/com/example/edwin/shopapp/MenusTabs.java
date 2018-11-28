@@ -88,11 +88,13 @@ ListaComprasFragment.OnFragmentInteractionListener, UbicacionPedidoFragment.OnFr
                 removeSharedPreferences();
                 logOut();
                 return true;
-            case R.id.action_salir:
-                finish();
             case R.id.configuracion:
                 Intent i = new Intent(getApplicationContext(),SettingActivity.class);
                 startActivity(i);
+                return true;
+            case R.id.action_info_user:
+                Intent intent = new Intent(getApplicationContext(),AboutActivity.class);
+                startActivity(intent);
 
             default:
                 return super.onOptionsItemSelected(item);

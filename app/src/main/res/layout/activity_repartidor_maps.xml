@@ -19,7 +19,14 @@
             android:layout_height="wrap_content"
             android:text="Cargando direccion de pedido"/>
 
+
     </LinearLayout>
+    <TextView
+        android:id="@+id/tvruta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hemos calculado la siguinete ruta:"
+        android:visibility="invisible"/>
 
 
 
@@ -30,6 +37,14 @@
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_weight="5"
         tools:context=".RepartidorMaps"/>
+
+    <Button
+        android:id="@+id/btnEntregado"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:text="Entregado" />
 
 </LinearLayout>

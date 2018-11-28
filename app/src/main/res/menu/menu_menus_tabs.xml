@@ -2,24 +2,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.edwin.shopapp.MenusTabs">
-    <item
-        android:id="@+id/action_settings"
-        android:orderInCategory="100"
-        android:title="@string/action_settings"
-        android:icon="@drawable/ic_action_carrito"
-        app:showAsAction="ifRoom" />
+
     <item
         android:id="@+id/action_info_user"
         android:orderInCategory="100"
-        android:title="@string/action_info_user"
+        android:title="Sobre la App"
         android:icon="@drawable/ic_action_datos_user"
-        app:showAsAction="ifRoom" />
-    <item
-        android:id="@+id/action_salir"
-        android:orderInCategory="100"
-        android:title="@string/action_salir"
-        android:icon="@drawable/ic_action_salir"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="never" />
     <item
         android:id="@+id/cerrar_sesion"
         android:orderInCategory="100"

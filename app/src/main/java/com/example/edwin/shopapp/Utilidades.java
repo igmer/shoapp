@@ -74,7 +74,7 @@ public class Utilidades {
             String comando="SELECT p.codigo, p.fechaIngreso,u.nombre,u.apellido " +
                     "FROM pedidos p "+
                     "INNER JOIN usuarios u on p.idCliente= u.usuario"+
-                    " WHERE p.idRepartidor = '"+idRepartidor+"' AND p.idestado = 'NVO' ";
+                    " WHERE p.idRepartidor = '"+idRepartidor+"' AND p.idestado = 'ENC' ";
             ResultSet rs = st.executeQuery(comando);
             ResultSetMetaData rsmd = rs.getMetaData();
             int columnsNumber = rsmd.getColumnCount();

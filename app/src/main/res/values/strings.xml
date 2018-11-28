@@ -3,7 +3,7 @@
     <string name="title_activity_menus_tabs">MenusTabs</string>
     <string name="tab_text_1">Productos</string>
     <string name="tab_text_2">Carrito</string>
-    <string name="tab_text_3">Ubicación</string>
+    <string name="tab_text_3">Mis Compras</string>
     <string name="action_settings">Compras</string>
     <string name="action_info_user">Datos Usuario</string>
     <string name="action_salir">Salir</string>

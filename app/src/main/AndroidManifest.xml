@@ -50,14 +50,17 @@
         <activity
             android:name=".RepartidorMaps"
             android:label="@string/title_activity_repartidor_maps" />
-        <activity android:name=".SettingActivity"
+        <activity
+            android:name=".SettingActivity"
             android:label="Configuraciones"
             android:parentActivityName=".MenusTabs">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MenusTabs"/>
-
+                android:value=".MenusTabs" />
         </activity>
+        <activity android:name=".AboutActivity"
+            android:label="Equipo de Desarrollo"
+            android:parentActivityName=".MenusTabs"></activity>
     </application>
 
 </manifest>
