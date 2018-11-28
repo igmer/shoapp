@@ -59,8 +59,8 @@ public class ListViewAdapterRepartidor extends BaseAdapter{
             String fila = lista.get(position); // aqui tengo cada fila del arrayList
             String[] parts = fila.split("!/"); //partimos la cadena por el - con el que concatemanos al crear el arrayList
 
-            tvCliente.setText(parts[0]);
-            tvProducto.setText(parts[1]);
+            tvCliente.setText(parts[1]);
+            tvProducto.setText(parts[0]);
             tvDireccion.setText(parts[2]+" "+parts[3]);
 
         }catch (Exception e){

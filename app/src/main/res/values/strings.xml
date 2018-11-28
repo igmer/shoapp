@@ -50,4 +50,14 @@
     </string-array>
     <string name="title_activity_confrimar_entrega">Map</string>
     <string name="title_activity_repartidor_maps">Map</string>
+    <string-array name="mapas">
+        <item>Satelital</item>
+        <item>Hibrido</item>
+
+    </string-array>
+
+    <string-array name="mapas_alias">
+        <item>"sat"</item>
+        <item>"Hib"</item>
+    </string-array>
 </resources>

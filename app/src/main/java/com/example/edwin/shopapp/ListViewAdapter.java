@@ -57,22 +57,22 @@ public class ListViewAdapter extends BaseAdapter {
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         View itemView = inflater.inflate(R.layout.filaproducto, parent, false);
+        try{
+            tvNombre = (TextView) itemView.findViewById(R.id.tvNombre);
+            tvDescripcion = (TextView) itemView.findViewById(R.id.tvDescripcion);
+            tvPrecio = (TextView) itemView.findViewById(R.id.tvPrecio);
+            img = (ImageView) itemView.findViewById(R.id.imgcarta);
 
-        // Locate the TextViews in listview_item.xml
-        tvNombre = (TextView) itemView.findViewById(R.id.tvNombre);
-        tvDescripcion = (TextView) itemView.findViewById(R.id.tvDescripcion);
-       // tvModelo = (TextView) itemView.findViewById(R.id.tvModelo);
-        tvPrecio = (TextView) itemView.findViewById(R.id.tvPrecio);
-        img = (ImageView) itemView.findViewById(R.id.imgcarta);
+            String fila = lista.get(position); // aqui tengo cada fila del arrayList
+            String[] parts = fila.split("!-"); //partimos la cadena por el - con el que concatemanos al crear el arrayList
 
-        String fila = lista.get(position); // aqui tengo cada fila del arrayList
-        String[] parts = fila.split("!-"); //partimos la cadena por el - con el que concatemanos al crear el arrayList
+            tvNombre.setText(parts[1]);
+            tvDescripcion.setText(parts[3]);
+            //tvModelo.setText(parts[0]); // esta es la Url pero la usaremos luego para cargar la imagen
+            tvPrecio.setText(parts[2]);
+            Picasso.get().load("http://www.geoshop.somee.com/UpImg/"+parts[0]).into(img);
 
-        tvNombre.setText(parts[1]);
-        tvDescripcion.setText(parts[3]);
-        //tvModelo.setText(parts[0]); // esta es la Url pero la usaremos luego para cargar la imagen
-        tvPrecio.setText(parts[2]);
-        Picasso.get().load("http://www.geoshop.somee.com/UpImg/"+parts[0]).into(img);
+        }catch (Exception e){e.printStackTrace();}
 
         return itemView;
     }

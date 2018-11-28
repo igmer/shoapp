@@ -4,6 +4,7 @@ import android.app.ListFragment;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -14,6 +15,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -37,6 +39,7 @@ public class ProductosServiciosFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    Utilidades u;
 
     Button btnSalir, btnInfo;
     Spinner spnCategorias;
@@ -47,6 +50,8 @@ public class ProductosServiciosFragment extends Fragment {
     String [] precio;
     ArrayList<String> categorias;
     ListViewAdapter adapter;
+    ListView lista;
+    ProgressBar pbWaiting;
 
     private OnFragmentInteractionListener mListener;
 
@@ -83,25 +88,41 @@ public class ProductosServiciosFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle state) {
         super.onActivityCreated(state);
-        Utilidades u = new Utilidades();
+        u = new Utilidades();
 
         //nombre=getResources().getStringArray(R.array.NomProducto);
        // modelo=getResources().getStringArray(R.array.ModeloProducto);
       //  descripcion=getResources().getStringArray(R.array.DescProducto);
       //  precio=getResources().getStringArray(R.array.PrecioProducto);
-        categorias = u.getListaProducto();
+       // categorias = u.getListaProducto("todas");
 
         spnCategorias =(Spinner) getActivity().findViewById(R.id.ListaCategoria);
         ArrayAdapter<String> adapterCategories = new ArrayAdapter<String>(getContext(),R.layout.support_simple_spinner_dropdown_item,categoriaProducto());
         spnCategorias.setAdapter(adapterCategories);
 
-         ListView lista = (ListView) getActivity().findViewById(R.id._Lista);
-         adapter = new ListViewAdapter(getActivity(), categorias);
-       // adaptador_categoria = new ArrayAdapter(getActivity(),android.R.layout.simple_list_item_1,categorias);
+         lista = (ListView) getActivity().findViewById(R.id._Lista);
+         pbWaiting = (ProgressBar) getView().findViewById(R.id.pbWaiting);
+        // adapter = new ListViewAdapter(getActivity(), categorias);
+        spnCategorias.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+              //  Toast.makeText(getContext(),String.valueOf(i),Toast.LENGTH_SHORT).show();
+                String cat = getCodigoCategoria(i);
+                Principal p = new Principal();
+                p.execute(cat);
 
 
-        lista.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+
+       // lista.setAdapter(adapter);
+        //adapter.notifyDataSetChanged();
 
         lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -120,7 +141,6 @@ public class ProductosServiciosFragment extends Fragment {
                 i.putExtra("nombre",nombre);
                 i.putExtra("precio",precio);
                 i.putExtra("descripcion",descripcion);
-              //  i.
                 startActivity(i);
 
             }
@@ -160,13 +180,73 @@ public class ProductosServiciosFragment extends Fragment {
     public ArrayList<String> categoriaProducto(){
         ArrayList<String> categories = new ArrayList<>();
         categories.add("Todas");
-        categories.add("Tarjeta de Video");
+        categories.add("Tarjeta SD");
+        categories.add("Memoria USB");
+        categories.add("Tarjeta de video");
         categories.add("Cases");
-        categories.add("Discos Duros");
-        categories.add("Procesadores");
-        categories.add("Memorias RAM");
-        categories.add("Ventiladores");
+        categories.add("Disco Duro");
+        categories.add("Prodcesadores");
+        categories.add("Memoria RAM");
+        categories.add("Ventidalores");
         return categories;
+    }
+    public String getCodigoCategoria(int position){
+        String categoria = "";
+        if (position==1){
+            categoria= "007";
+        }else if (position==2){
+            categoria= "008";
+        }else if (position==3){
+            categoria= "AAA";
+        }else if (position==4){
+            categoria= "CAS";
+        }else if (position==5){
+            categoria= "HDD";
+        }else if (position==6){
+            categoria= "PRO";
+        }else if (position==7){
+            categoria= "RAM";
+        }else if (position==8){
+            categoria= "VEN";
+        }else{
+            categoria= "todas";
+        }
+
+        return categoria;
+    }
+    class Principal extends AsyncTask<String, Void, ListViewAdapter>{
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            pbWaiting.setVisibility(View.VISIBLE);
+            if (categorias!= null){
+                adapter.notifyDataSetChanged();
+                categorias.clear();
+            }
+        }
+
+        @Override
+        protected ListViewAdapter doInBackground(String... strings) {
+            if (categorias != null){
+                categorias.clear();
+            }
+            String cat = strings[0];
+            categorias = u.getListaProducto(cat);
+            adapter = new ListViewAdapter(getActivity(), categorias);
+            adapter.notifyDataSetChanged();
+
+            return adapter;
+        }
+
+        @Override
+        protected void onPostExecute(ListViewAdapter adapterf) {
+            super.onPostExecute(adapterf);
+            adapterf.notifyDataSetChanged();
+            lista.setAdapter(adapterf);
+            adapterf.notifyDataSetChanged();
+            pbWaiting.setVisibility(View.INVISIBLE);
+
+        }
     }
 
 }

@@ -90,6 +90,10 @@ ListaComprasFragment.OnFragmentInteractionListener, UbicacionPedidoFragment.OnFr
                 return true;
             case R.id.action_salir:
                 finish();
+            case R.id.configuracion:
+                Intent i = new Intent(getApplicationContext(),SettingActivity.class);
+                startActivity(i);
+
             default:
                 return super.onOptionsItemSelected(item);
         }

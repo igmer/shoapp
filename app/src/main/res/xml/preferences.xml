@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <SwitchPreference
+        android:key="ofertas"
+        android:defaultValue="true"
+        android:title="Recibir notificacion de ofertas"
+        />
+    <ListPreference
+        android:key="language_preference"
+        android:title="Tipo Mapa"
+        android:entries="@array/mapas"
+        android:entryValues="@array/mapas_alias"
+
+        />
+
+</PreferenceScreen>

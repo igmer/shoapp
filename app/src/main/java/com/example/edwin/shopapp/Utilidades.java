@@ -36,13 +36,19 @@ public class Utilidades {
         }
         return existe;
     }
-    public ArrayList<String> getListaProducto( ){
+    public ArrayList<String> getListaProducto( String cat){
         Connection connect; connect = ConexionSQL.ConnectionHelper();
         ArrayList<String> productos = new ArrayList<>();
+        String comando;
 
         try {
             Statement st = connect.createStatement();
-            String comando="SELECT nombre,precio,descripcion,urlImage,codigo FROM Productos";
+            if (cat.equals("todas")){
+                 comando="SELECT nombre,precio,descripcion,urlImage,codigo FROM Productos";
+            }else{
+                 comando="SELECT nombre,precio,descripcion,urlImage,codigo FROM Productos WHERE idCategoria = '"+cat+"' ";
+            }
+
             ResultSet rs = st.executeQuery(comando);
             ResultSetMetaData rsmd = rs.getMetaData();
             int columnsNumber = rsmd.getColumnCount();
@@ -109,5 +115,29 @@ public class Utilidades {
     }
     public  static String getPassPrefs(SharedPreferences prefs){
         return prefs.getString("pass","");
+    }
+    public String getCodigoCategoria(int position){
+        String categoria = "";
+        if (position==1){
+            categoria= "007";
+        }else if (position==2){
+            categoria= "008";
+        }else if (position==3){
+            categoria= "AAA";
+        }else if (position==4){
+            categoria= "CAS";
+        }else if (position==5){
+            categoria= "HDD";
+        }else if (position==6){
+            categoria= "PRO";
+        }else if (position==7){
+            categoria= "RAM";
+        }else if (position==8){
+            categoria= "VEN";
+        }else{
+            categoria= "todas";
+        }
+
+        return categoria;
     }
 }
