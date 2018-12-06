@@ -82,7 +82,7 @@
                         android:layout_height="match_parent"
                         android:drawableLeft="@drawable/ic_action_pass"
                         android:hint="Contraseña:"
-                        android:inputType="textPersonName" />
+                        android:inputType="textPassword" />
                 </android.support.design.widget.TextInputLayout>
 
             </LinearLayout>

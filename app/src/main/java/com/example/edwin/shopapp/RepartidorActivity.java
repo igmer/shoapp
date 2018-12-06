@@ -38,7 +38,9 @@ public class RepartidorActivity extends AppCompatActivity {
 
                 Intent intent = new Intent(getApplicationContext(),RepartidorMaps.class);
                 intent.putExtra("codigo",parts[0]);
+                intent.putExtra("cliente",parts[2]+" "+parts[3]);
                 startActivity(intent);
+                finish();
 
             }
         });
