@@ -313,7 +313,7 @@ public class ConfrimarEntregaActivity extends FragmentActivity implements OnMapR
                 //String lotitud = String.valueOf(marketShop.getPosition().latitude);
                String pedidoInsert="INSERT INTO pedidos(idEstado,fechaIngreso,idCliente,latitud," +
                        "longitud,latidudDestino,longituDestino)" +
-                       "values('SOL','"+fecha+"','"+usuario+"','13.700059'," +
+                       "values('NVO','"+fecha+"','"+usuario+"','13.700059'," +
                         "'-89.200195',"+latitudTxt+","+longitudTxt+")";
               // Log.i("**",pedidoInsert);
                 st.execute(pedidoInsert);
@@ -357,6 +357,12 @@ public class ConfrimarEntregaActivity extends FragmentActivity implements OnMapR
             }else{
                 Toast.makeText(getApplicationContext(),"Hubo un error al agregar el producto",Toast.LENGTH_LONG).show();
             }
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            btnConfirmarEntrega.setEnabled(false);
         }
     }
 

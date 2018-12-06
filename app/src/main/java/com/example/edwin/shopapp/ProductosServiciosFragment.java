@@ -227,13 +227,19 @@ public class ProductosServiciosFragment extends Fragment {
 
         @Override
         protected ListViewAdapter doInBackground(String... strings) {
-            if (categorias != null){
-                categorias.clear();
+            try {
+                if (categorias != null){
+                    categorias.clear();
+                }
+                String cat = strings[0];
+                categorias = u.getListaProducto(cat);
+                adapter = new ListViewAdapter(getActivity(), categorias);
+                adapter.notifyDataSetChanged();
+
+            }catch (Exception e){
+                e.printStackTrace();
             }
-            String cat = strings[0];
-            categorias = u.getListaProducto(cat);
-            adapter = new ListViewAdapter(getActivity(), categorias);
-            adapter.notifyDataSetChanged();
+
 
             return adapter;
         }
