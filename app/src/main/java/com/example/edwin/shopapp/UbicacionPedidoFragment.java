@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,7 +35,7 @@ public class UbicacionPedidoFragment extends Fragment  implements OnMapReadyCall
     //MapView mMapView;
    private GoogleMap mMap;
     private SharedPreferences pref;
-
+    String tipoMapa;
 
 
     private OnFragmentInteractionListener mListener;
@@ -68,6 +69,10 @@ public class UbicacionPedidoFragment extends Fragment  implements OnMapReadyCall
         final SupportMapFragment myMAPF = (SupportMapFragment) getChildFragmentManager()
                 .findFragmentById(R.id.map);
         myMAPF.getMapAsync(this);
+        SharedPreferences pref = PreferenceManager
+                .getDefaultSharedPreferences(getActivity());
+        tipoMapa = pref.getString("language_preference", "MAP_TYPE_TERRAIN");
+
 
         return view;
     }
@@ -100,6 +105,13 @@ public class UbicacionPedidoFragment extends Fragment  implements OnMapReadyCall
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+       if (tipoMapa.equals("MAP_TYPE_SATELLITE")){
+           mMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
+       }else if(tipoMapa.equals("MAP_TYPE_SATELLITE")){
+           mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+       }else{
+            mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+        }
         LatLng latLng= new LatLng(13.700073, -89.200170);
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,10));
         if (mMap != null) {

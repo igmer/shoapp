@@ -57,7 +57,7 @@
     </string-array>
 
     <string-array name="mapas_alias">
-        <item>"sat"</item>
-        <item>"Hib"</item>
+        <item>"MAP_TYPE_SATELLITE"</item>
+        <item>"MAP_TYPE_HYBRID"</item>
     </string-array>
 </resources>
