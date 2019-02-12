@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "926083489549",
+    "firebase_url": "https://pruebacarrito-1e943.firebaseio.com",
+    "project_id": "pruebacarrito-1e943",
+    "storage_bucket": "pruebacarrito-1e943.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:926083489549:android:22306af4171a014d",
+        "android_client_info": {
+          "package_name": "com.example.edwin.shopapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "926083489549-pi0jqph76uqqeab9gfmgdkdnds5bodce.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.edwin.shopapp",
+            "certificate_hash": "3a35c158a43278b687adef749e5a5199219f739c"
+          }
+        },
+        {
+          "client_id": "926083489549-09fng9tll6rhvlq41i3g7qo254kdesku.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA0rKLd98vLmybZ-KBy4_PxYOy3DHILpyM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "926083489549-09fng9tll6rhvlq41i3g7qo254kdesku.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

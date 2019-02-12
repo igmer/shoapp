@@ -1,14 +1,22 @@
 package com.example.edwin.shopapp;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.sql.Connection;
 import java.sql.Statement;
@@ -21,12 +29,15 @@ import java.util.regex.Pattern;
 public class RegistroUsuarios extends AppCompatActivity {
     EditText txtNombre,txtApellido,txtTel,txtDireccion,txtCorreo,txtPassword1,txtPassword2;
     Button  btnAceptar_nuevo_usuario;
+    private FirebaseAuth mAuth;
+    public String TAG ="**firebase***";
    // private Connection connect;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registro_usuarios);
+        mAuth = FirebaseAuth.getInstance();
         txtNombre = (EditText)findViewById(R.id.txtNombre);
         txtApellido = (EditText)findViewById(R.id.txtApellido);
         txtTel = (EditText)findViewById(R.id.txtTel);
@@ -41,11 +52,7 @@ public class RegistroUsuarios extends AppCompatActivity {
             public void onClick(View view) {
                 if (isDataValid()){
                    int exito= registrarUsuario();
-                   if (exito==1){
-                       Toast.makeText(getApplicationContext(),"Usuario Registrado con exito",Toast.LENGTH_LONG).show();
-                       Intent i = new Intent(getApplicationContext(),Principal.class);
-                       startActivity(i);
-                   }
+
                 }
 
             }
@@ -55,18 +62,6 @@ public class RegistroUsuarios extends AppCompatActivity {
 
 
     public boolean isDataValid(){
-
-        if(TextUtils.isEmpty(txtNombre.getText())){
-            txtNombre.setError("Nombre requerido");
-            txtNombre.requestFocus();
-            return false;
-        }
-        if(TextUtils.isEmpty(txtApellido.getText())){
-            txtApellido.setError("Apellidofgy requerido");
-            txtApellido.requestFocus();
-            return false;
-        }
-        
 
         if(TextUtils.isEmpty(txtCorreo.getText())){
             txtCorreo.setError("Correo Electrónico, requerido");
@@ -80,61 +75,6 @@ public class RegistroUsuarios extends AppCompatActivity {
             if(!pattern.matcher(txtCorreo.getText().toString()).matches()){
                 txtCorreo.setError("Correo Electrónico inválido, favor verifique");
                 txtCorreo.requestFocus();
-                return false;
-            }
-        }
-
-      /*
-
-        Usuarios objUsuValCorreo= new Usuarios();
-        objUsuValCorreo.setCorreoElectronico(txtCorreo.getText().toString());
-
-        UsuariosBL objUsuVal = new UsuariosBL(getApplicationContext(), objUsuValCorreo );
-
-        LinkedList listDatosUsuario;
-
-        listDatosUsuario =objUsuVal.getByID();
-        if(listDatosUsuario.size() > 0){
-            txtCorreo.setError("El Correo Electrónico "+ txtCorreo.getText().toString() +" ya ha sido registrado, favor verifique");
-            txtCorreo.requestFocus();
-            return false;
-        }
-
-        objUsuValCorreo= new Usuarios();
-        objUsuValCorreo.setUsuario(edtUsuario.getText().toString());
-
-        objUsuVal = new UsuariosBL(getApplicationContext(), objUsuValCorreo );
-        listDatosUsuario =objUsuVal.getByUSUARIO();
-        if(listDatosUsuario.size() > 0){
-            edtUsuario.setError("El Usuario "+ edtUsuario.getText().toString() +" ya ha sido registrado, favor verifique");
-            edtUsuario.requestFocus();
-            return false;
-        }
-*/
-        if(TextUtils.isEmpty(txtDireccion.getText())){
-            txtDireccion.setError("Dirección de residencia requerida");
-            txtDireccion.requestFocus();
-            return false;
-        }
-
-        if(TextUtils.isEmpty(txtTel.getText())){
-            txtTel.setError("Teléfono requerido");
-            txtTel.requestFocus();
-            return false;
-
-        }
-
-
-
-        if(TextUtils.isEmpty(txtPassword1.getText())){
-            txtPassword1.setError("Contraseña requerida");
-            txtPassword1.requestFocus();
-            return false;
-        }
-        else{
-            if(txtPassword1.getText().toString().length() < 5){
-                txtPassword1.setError("Contraseña debe poseer al menos 5 caracteres");
-                txtPassword1.requestFocus();
                 return false;
             }
         }
@@ -154,19 +94,29 @@ public class RegistroUsuarios extends AppCompatActivity {
 
     }
     private int registrarUsuario() {
+        String email = txtCorreo.getText().toString().trim();
+        String password = txtPassword1.getText().toString().trim();
         try {
-            Connection  connect = ConexionSQL.ConnectionHelper();
-            Statement st = connect.createStatement();
-            String NombreTxt = txtNombre.getText().toString().trim();
-            String ApellidoTxt = txtApellido.getText().toString().trim();
-            String TelTxt = txtTel.getText().toString().trim();
-            String DireccionTxt = txtDireccion.getText().toString().trim();
-            String CorreoTxt = txtCorreo.getText().toString().trim();
-            String Password1Txt = txtPassword1.getText().toString().trim();
-            String sql = "INSERT INTO usuarios VALUES('" + CorreoTxt + "','" + Password1Txt + "','" + NombreTxt + "'," +
-                    "'" + ApellidoTxt + "','" + DireccionTxt + "','" + TelTxt + "','" + CorreoTxt + "','CLI')";
-            st.execute(sql);
-            connect.close();
+            mAuth.createUserWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                // Sign in success, update UI with the signed-in user's information
+                                Log.d(TAG, "createUserWithEmail:success");
+                                FirebaseUser user = mAuth.getCurrentUser();
+                               // updateUI(user);
+                            } else {
+                                // If sign in fails, display a message to the user.
+                                Log.w(TAG, "createUserWithEmail:failure", task.getException());
+                                Toast.makeText(getApplicationContext(), "Authentication failed.",
+                                        Toast.LENGTH_SHORT).show();
+                               // updateUI(null);
+                            }
+
+                            // ...
+                        }
+                    });
             return  1;
         }catch (Exception e){
             e.printStackTrace();
